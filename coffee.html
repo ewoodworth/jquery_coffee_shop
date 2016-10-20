@@ -33,9 +33,9 @@
                 </td>
             </tr>
             <tr>
-                <td>$3.25</td>
-                <td>$4.15</td>
-                <td>$2.50</td>
+                <td id="price_espresso">$3.25</td>
+                <td id="price_latte">$4.15</td>
+                <td id="price_hot_chocolate">$2.50</td>
             </tr>
         </table>
 
@@ -48,11 +48,42 @@
 
     $("#coffee_image").attr("src", "static/coffee_beans.jpg");
 
-    $("#coffee_image").on("click",  function () {
-         $("#coffee_image").attr('src', "static/coffee_machine.jpg");
-         setTimeout(function() { $("#coffee_image").attr("src", "static/coffee_mug.jpg"); }, 500);
-         setTimeout(function() { $("#coffee_image").attr("src", "static/coffee_beans.jpg"); }, 1500);
-    });
+
+    var revenue = function (drinksOrdered){
+
+        var total = 0;
+        for (var i = drinksOrdered.length - 1; i >= 0; i--) {
+            if (drinksOrdered[i] === "espresso") {
+                total += 3.25;
+            }
+            else if (drinksOrdered[i] === "latte") {
+                total += 4.15;
+            }
+            else if (drinksOrdered[i] === "hot-chocolate"){
+                total += 2.50;
+            }
+        }
+        return Number(total).toFixed(2);
+    };
+
+
+    var drinksOrdered = [];
+    var makeCoffee = function (drinkType) {
+
+        drinksOrdered.push(drinkType);
+
+        $("#coffee_image").attr('src', "static/coffee_machine.jpg");
+        setTimeout(function() { $("#coffee_image").attr("src", "static/coffee_mug.jpg"); }, 500);
+        setTimeout(function() { $("#coffee_image").attr("src", "static/coffee_beans.jpg"); }, 1500);
+
+        $("#revenue").html(revenue(drinksOrdered));
+    };
+
+    $("#coffee_image").on("click", function () { makeCoffee("brew");});
+
+    $("#espresso").on("click", function () { makeCoffee("espresso");});
+    $("#latte").on("click", function () { makeCoffee("latte");});
+    $("#hot-chocolate").on("click", function () { makeCoffee("hot-chocolate");});
 
 </script>
 
