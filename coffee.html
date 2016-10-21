@@ -23,13 +23,13 @@
         <table class="table">
             <tr>
                 <td class="col-md-2">
-                    <button class="btn btn-default" id="espresso">Espresso</button>
+                    <button class="btn btn-default" id="espresso" value="3.25">Espresso</button>
                 </td>
                 <td class="col-md-2">
-                    <button class="btn btn-default" id="latte">Latte</button>
+                    <button class="btn btn-default" id="latte" data-price="4.15">Latte</button>
                 </td>
                 <td class="col-md-2">
-                    <button class="btn btn-default" id="hot-chocolate">Hot Chocolate</button>
+                    <button class="btn btn-default" id="hot-chocolate" value=int("2.50")>Hot Chocolate</button>
                 </td>
             </tr>
             <tr>
@@ -48,21 +48,17 @@
 
     $("#coffee_image").attr("src", "static/coffee_beans.jpg");
 
+    var prices = {espresso: 3.25, latte: 4.15, hotChocolate: 2.50};
 
     var revenue = function (drinksOrdered){
 
         var total = 0;
+
         for (var i = drinksOrdered.length - 1; i >= 0; i--) {
-            if (drinksOrdered[i] === "espresso") {
-                total += 3.25;
-            }
-            else if (drinksOrdered[i] === "latte") {
-                total += 4.15;
-            }
-            else if (drinksOrdered[i] === "hot-chocolate"){
-                total += 2.50;
-            }
+
+            total += prices[drinksOrdered[i]];
         }
+
         return Number(total).toFixed(2);
     };
 
@@ -83,7 +79,7 @@
 
     $("#espresso").on("click", function () { makeCoffee("espresso");});
     $("#latte").on("click", function () { makeCoffee("latte");});
-    $("#hot-chocolate").on("click", function () { makeCoffee("hot-chocolate");});
+    $("#hot-chocolate").on("click", function () { makeCoffee("hotChocolate");});
 
 </script>
 
